@@ -1,3 +1,4 @@
+from cgi import test
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -14,3 +15,10 @@ pc = Perceptron()
 pc.fit(x,y)
 y_pred = pc.predict([[2,0.5]])
 print(y_pred)
+
+from sklearn.datasets import load_boston
+data_x,data_y = load_boston(return_X_y=True)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(data_x,data_y,test_size=0.2,random_state=42)
+
