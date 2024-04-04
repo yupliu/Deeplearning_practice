@@ -1,24 +1,21 @@
-from cgi import test
-import numpy as np
-import matplotlib.pyplot as plt
-import h5py
-import scipy
-from PIL import Image
-from scipy import ndimage
-from sklearn.datasets import load_iris
-from sklearn.linear_model import Perceptron
+import sklearn as sl
+from sklearn import datasets
+from sklearn import model_selection
 
-iris = load_iris()
-x = iris.data[:,(2,3)]
-y = (iris.target == 0).astype(np.int32)
-pc = Perceptron()
-pc.fit(x,y)
-y_pred = pc.predict([[2,0.5]])
-print(y_pred)
+data,target = sl.datasets.load_iris(return_X_y=True,as_frame=True)
+x_train,x_test,y_train,y_test = model_selection.train_test_split(data,target,test_size=0.3)
 
-from sklearn.datasets import load_boston
-data_x,data_y = load_boston(return_X_y=True)
+from sklearn import svm
+svc = svm.SVC(kernel = 'linear', C = 1)
+svc.fit(x_train,y_train)
+from sklearn.metrics import accuracy_score
+score = accuracy_score(y_test,svc.predict(x_test))
+print(score)
 
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test = train_test_split(data_x,data_y,test_size=0.2,random_state=42)
+
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_predict
+cvs = cross_val_score(svc,x_train,y_train, cv=2)
+cvp = cross_val_predict(svc,x_train,y_train)
+
 
