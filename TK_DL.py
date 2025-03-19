@@ -48,8 +48,6 @@ class TK_Model(nn.Module):
 batch_size = 128
 epochs = 15
 model = TK_Model()
-model.build()
-model.summary()
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 model.fit(X_train,y_train, batch_size=batch_size, epochs= epochs, validation_split=0.1)
 
